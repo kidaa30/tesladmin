@@ -1,7 +1,7 @@
 Tesladmin
 =========
 
-Tesladmin is an admin page for the `Nikola <http://getnikola.com>` static site generator. Note that it's in early beta stages; little is paid to security right now. Work in progress!
+Tesladmin is an admin page for the `Nikola <http://getnikola.com>`_ static site generator. Note that it's in early beta stages; little is paid to security right now. Work in progress!
 
 Why?
 ****
