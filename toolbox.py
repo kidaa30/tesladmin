@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, os, glob, getpass, shutil
+import sys, os, glob, shutil
 from tinymk import *
 
 try:
