@@ -60,7 +60,7 @@ class PostAdmin(admin.ModelAdmin):
 
            %s
 
-        '''.lstrip('\n') % (obj.title, obj.slug, obj.date, obj.tags, obj.text.replace('\n', '')))
+        '''.lstrip('\n') % (obj.title, obj.slug, obj.date, obj.tags, obj.text.replace(u'\r\n', u'')))
         with open(obj.path, 'w') as f:
             f.write(text)
         if r.run(['nikola', 'build']) is None: return
