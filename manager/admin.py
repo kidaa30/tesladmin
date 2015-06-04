@@ -27,7 +27,8 @@ class Runner():
             if 'ERROR' in res:
                 messages.error(self.request,
                                'error while running nikola: %s' % res)
-            return
+                return
+            return res
         except subprocess.CalledProcessError as ex:
             messages.error(self.request,
                            'error while running nikola: %s' % ex.output)
@@ -55,8 +56,11 @@ class PostAdmin(admin.ModelAdmin):
         .. tags: %s
         .. type: text
 
-        %s
-        '''.lstrip('\n') % (obj.title, obj.slug, obj.date, obj.tags, obj.text))
+        .. raw:: html
+
+           %s
+
+        '''.lstrip('\n') % (obj.title, obj.slug, obj.date, obj.tags, obj.text.replace('\n', '')))
         with open(obj.path, 'w') as f:
             f.write(text)
         if r.run(['nikola', 'build']) is None: return

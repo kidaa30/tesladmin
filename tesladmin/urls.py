@@ -9,5 +9,6 @@ urlpatterns = patterns('',
                                          else os.path.join(settings.STATIC_ROOT,
                                                            'output')
     }),
-    url(r'^admin/', include(admin.site.urls))
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^tinymce/', include('tinymce.urls')),
 )

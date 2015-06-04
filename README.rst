@@ -14,7 +14,7 @@ How do I use it?
 Installation
 ^^^^^^^^^^^^
 
-Make sure you have Git, Python, and Django installed. Run::
+Make sure you have Git, Python, Django, django-tinymce and installed. Run::
   
   $ git clone https://github.com/kirbyfan64/tesladmin.git
 
