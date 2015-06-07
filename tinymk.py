@@ -1,7 +1,7 @@
 # TinyMk
 # A miniature Makefile alternative
 #
-# Copyright (c) 2014 Ryan Gonzalez
+# Copyright (c) 2015 Ryan Gonzalez
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ __version__ = 0.3
 
 import sys, os, subprocess, shlex, traceback, re, sqlite3, hashlib, warnings
 from multiprocessing import Process, Lock
+from collections import OrderedDict
 from contextlib import closing
 
 lock = Lock()
@@ -42,7 +43,7 @@ def quote_cmd(x):
 
 class Category(object):
     def __init__(self):
-        self.content = {}
+        self.content = OrderedDict()
         self.f = None
     def __getitem__(self, x):
         return self.content[x]
@@ -129,7 +130,7 @@ def ptask(pattern, outs, deps, category=None):
     return _f
 
 def extract_tasks(n, x):
-    res = {}
+    res = OrderedDict()
     for k, v in x:
         name = '%s:%s' % (n, k) if n else k
         if isinstance(v, Category):
@@ -211,7 +212,7 @@ def cinvoke(category_str, invoker=invoke):
     for x in extract_tasks(category_str, category.content.items()):
         invoker(x)
 
-def run(cmd, write=True, shell=False, get_output=False):
+def run(cmd, write=True, shell=False, get_output=False, **kw):
     if write:
         with lock:
             if isinstance(cmd, str):
@@ -221,9 +222,7 @@ def run(cmd, write=True, shell=False, get_output=False):
     if isinstance(cmd, str) and not shell:
         cmd = shlex.split(cmd)
     if get_output:
-        kw = {'stdout': subprocess.PIPE, 'stderr': subprocess.PIPE}
-    else:
-        kw = {}
+        kw.update({'stdout': subprocess.PIPE, 'stderr': subprocess.PIPE})
     p = subprocess.Popen(cmd, shell=shell, **kw)
     p.wait()
     if p.returncode != 0:
@@ -314,6 +313,9 @@ def main(no_warn=False, default=None):
         qinvoke(task, *args, **kw)
     except SystemExit as ex:
         sys.exit(ex.code)
+    # Don't eat KeyboardInterrupt
+    except KeyboardInterrupt:
+        sys.exit()
     except:
         sys.stderr.write('Exception occured during excecution of build script!\n')
         traceback.print_exc()
