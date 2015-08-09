@@ -14,7 +14,13 @@ How do I use it?
 Installation
 ^^^^^^^^^^^^
 
-Make sure you have Git, Python, Django, django-tinymce and installed. Run::
+Make sure you have `Git <https://git-scm.com/>`_, `Python <https://www.python.org/>`_, `Django <https://www.djangoproject.com/>`_,  and `django-tinymce <https://pypi.python.org/pypi/django-tinymce>`_ installed. To install the last two, you can run::
+  
+  $ pip install django django-tinymce
+
+provided you already have Python and pip installed.
+
+Now, to get Tesladmin, run::
   
   $ git clone https://github.com/kirbyfan64/tesladmin.git
 
